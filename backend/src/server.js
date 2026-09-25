@@ -28,7 +28,7 @@ setupSocket(io);
 // Connect to MongoDB Atlas and start server
 connectDB().then(() => {
   server.listen(PORT, () => {
-    console.log(`🚀 SkillSwap Server running on port ${PORT}`);
+    console.log(`🚀 Knowvia Server running on port ${PORT}`);
     console.log(`📡 Socket.IO ready`);
     console.log(`🌐 Environment: ${process.env.NODE_ENV}`);
   });

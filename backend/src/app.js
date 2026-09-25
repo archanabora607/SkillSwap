@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 
 // ── Health Check ─────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: 'SkillSwap API is running 🚀', timestamp: new Date() });
+  res.json({ success: true, message: 'Knowvia API is running 🚀', timestamp: new Date() });
 });
 
 // ── Inject io into req for controllers ──────────────────────────────

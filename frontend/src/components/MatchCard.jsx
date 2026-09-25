@@ -15,20 +15,23 @@ const MatchCard = ({ match }) => {
   };
 
   return (
-    <div className="glass-card rounded-2xl p-5 border border-gray-800/80 hover:border-indigo-500/40 transition-all duration-300 flex flex-col justify-between group">
+    <div className="knowvia-card-3d p-6 flex flex-col justify-between group relative overflow-hidden">
+      {/* Top subtle 3D highlight bar */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#5B2333] via-[#C86B7B] to-[#F4B6A6]"></div>
+
       <div>
         {/* Top Header: Avatar, Name, Compatibility Badge */}
         <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3.5">
             <div className="relative">
               {student.avatar ? (
                 <img
                   src={student.avatar}
                   alt={student.name}
-                  className="w-12 h-12 rounded-2xl object-cover border border-indigo-500/30"
+                  className="w-13 h-13 rounded-2xl object-cover border-2 border-[#F4B6A6]/60 shadow-md group-hover:scale-105 transition-transform"
                 />
               ) : (
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                <div className="w-13 h-13 rounded-2xl bg-gradient-to-tr from-[#5B2333] via-[#7A2E44] to-[#C86B7B] flex items-center justify-center text-[#FFF8F3] font-black text-xl shadow-md group-hover:scale-105 transition-transform">
                   {student.name?.charAt(0)}
                 </div>
               )}
@@ -36,11 +39,11 @@ const MatchCard = ({ match }) => {
             <div>
               <Link
                 to={`/user/${student._id}`}
-                className="font-bold text-white group-hover:text-indigo-300 transition-colors flex items-center space-x-1 text-sm sm:text-base"
+                className="font-black text-[#29201D] group-hover:text-[#5B2333] transition-colors flex items-center space-x-1 text-base font-['Outfit']"
               >
                 <span>{student.name}</span>
               </Link>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-[#665550] font-medium">
                 {student.college || student.department || 'Student'} {student.year ? `• Year ${student.year}` : ''}
               </p>
               <div className="mt-1">
@@ -51,25 +54,25 @@ const MatchCard = ({ match }) => {
 
           {/* Dynamic Compatibility Score Pill */}
           <div
-            className={`px-3 py-1.5 rounded-xl flex items-center space-x-1 font-extrabold text-xs border shadow-sm ${
+            className={`px-3 py-1.5 rounded-xl flex items-center space-x-1 font-black text-xs border shadow-sm ${
               matchPercentage >= 70
-                ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                 : matchPercentage >= 40
-                ? 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
-                : 'bg-purple-500/10 text-purple-300 border-purple-500/30'
+                ? 'bg-[#F4B6A6]/25 text-[#5B2333] border-[#F4B6A6]/50'
+                : 'bg-[#FFF8F3] text-[#5B2333] border-[#E8D8CC]'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5 text-[#C86B7B]" />
             <span>{matchPercentage}% Match</span>
           </div>
         </div>
 
         {/* Dynamic Match Reasons */}
         {matchReasons.length > 0 && (
-          <div className="mt-3.5 p-2.5 rounded-xl bg-gray-900/70 border border-gray-800/80 text-[11px] text-gray-300 space-y-1">
+          <div className="mt-4 p-3 rounded-xl bg-[#FFF8F3] border border-[#F2E0D5] text-[11px] text-[#5B2333] space-y-1 shadow-inner">
             {matchReasons.map((reason, idx) => (
-              <div key={idx} className="flex items-center space-x-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+              <div key={idx} className="flex items-center space-x-1.5 font-semibold">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
                 <span className="truncate">{reason.replace(/\*\*/g, '')}</span>
               </div>
             ))}
@@ -78,14 +81,14 @@ const MatchCard = ({ match }) => {
 
         {/* Bio */}
         {student.bio && (
-          <p className="mt-3 text-xs text-gray-400 line-clamp-2 italic">
+          <p className="mt-3 text-xs text-[#665550] line-clamp-2 italic font-normal">
             "{student.bio}"
           </p>
         )}
 
         {/* Can Teach */}
         <div className="mt-4">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-400 block mb-1.5">
+          <span className="text-[10px] font-black uppercase tracking-wider text-[#5B2333] block mb-1.5">
             Can Teach:
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -94,14 +97,14 @@ const MatchCard = ({ match }) => {
                 <SkillBadge key={st._id || st.skill?._id || st.skill} skill={st.skill || st} level={st.level} type="teach" />
               ))
             ) : (
-              <span className="text-xs text-gray-500">None listed</span>
+              <span className="text-xs text-[#8C7770] italic">None listed</span>
             )}
           </div>
         </div>
 
         {/* Wants to Learn */}
         <div className="mt-3">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400 block mb-1.5">
+          <span className="text-[10px] font-black uppercase tracking-wider text-[#C86B7B] block mb-1.5">
             Wants to Learn:
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -110,24 +113,24 @@ const MatchCard = ({ match }) => {
                 <SkillBadge key={sl._id || sl.skill?._id || sl.skill} skill={sl.skill || sl} type="learn" />
               ))
             ) : (
-              <span className="text-xs text-gray-500">None listed</span>
+              <span className="text-xs text-[#8C7770] italic">None listed</span>
             )}
           </div>
         </div>
       </div>
 
       {/* Card Footer Actions */}
-      <div className="mt-5 pt-3 border-t border-gray-800/60 flex items-center justify-between gap-2">
+      <div className="mt-5 pt-3.5 border-t border-[#F2E5DC] flex items-center justify-between gap-2">
         <Link
           to={`/user/${student._id}`}
-          className="text-xs font-semibold text-gray-400 hover:text-white transition-colors flex items-center space-x-1 px-2.5 py-1.5 rounded-lg hover:bg-gray-800"
+          className="text-xs font-bold text-[#5B2333] hover:text-[#C86B7B] transition-colors flex items-center space-x-1 px-3 py-1.5 rounded-xl hover:bg-[#FFF8F3]"
         >
-          <User className="w-3.5 h-3.5" />
+          <User className="w-3.5 h-3.5 text-[#C86B7B]" />
           <span>View Profile</span>
         </Link>
         <button
           onClick={handleSwapSkillsClick}
-          className="text-xs font-semibold px-4 py-2 rounded-xl bg-gradient-primary hover:bg-gradient-hover text-white shadow-md shadow-indigo-500/20 flex items-center space-x-1.5 transition-all cursor-pointer"
+          className="knowvia-btn-rose text-xs font-extrabold px-4 py-2 flex items-center space-x-1.5 cursor-pointer"
         >
           <ArrowRightLeft className="w-3.5 h-3.5" />
           <span>Swap Skills</span>

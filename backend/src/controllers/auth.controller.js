@@ -1,5 +1,7 @@
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User.model');
+const Skill = require('../models/Skill.model');
 const asyncHandler = require('../utils/asyncHandler');
 const { sendSuccess, sendError } = require('../utils/apiResponse');
 
@@ -7,6 +9,45 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
+};
+
+// Helper to ensure each skill is resolved to a valid MongoDB ObjectId
+const processSkillEntries = async (skillEntries) => {
+  if (!Array.isArray(skillEntries)) return [];
+  const processed = [];
+
+  for (const item of skillEntries) {
+    let rawSkill = item.skill || item._id || item;
+    let skillDoc = null;
+
+    if (rawSkill && mongoose.Types.ObjectId.isValid(rawSkill)) {
+      skillDoc = await Skill.findById(rawSkill);
+    }
+
+    // If not found by ObjectId, search by name
+    if (!skillDoc) {
+      const searchName = item.name || (typeof rawSkill === 'string' ? rawSkill.replace('sk_', '') : 'General Skill');
+      skillDoc = await Skill.findOne({ name: { $regex: `^${searchName}$`, $options: 'i' } });
+    }
+
+    // If still not found, create a new approved Skill document dynamically
+    if (!skillDoc) {
+      const skillName = item.name || (typeof rawSkill === 'string' ? rawSkill : 'General Skill');
+      skillDoc = await Skill.create({
+        name: skillName,
+        category: item.category || 'Other',
+        isApproved: true,
+      });
+    }
+
+    processed.push({
+      skill: skillDoc._id,
+      level: item.level || 'intermediate',
+      priority: item.priority || 'medium',
+    });
+  }
+
+  return processed;
 };
 
 // @desc    Register user
@@ -20,6 +61,9 @@ const register = asyncHandler(async (req, res) => {
     return sendError(res, 400, 'An account with this email already exists.');
   }
 
+  const processedTeach = await processSkillEntries(skillsToTeach);
+  const processedLearn = await processSkillEntries(skillsToLearn);
+
   const user = await User.create({
     name,
     email,
@@ -28,8 +72,8 @@ const register = asyncHandler(async (req, res) => {
     department: department || '',
     year: year ? Number(year) : 1,
     bio: bio || '',
-    skillsToTeach: skillsToTeach || [],
-    skillsToLearn: skillsToLearn || [],
+    skillsToTeach: processedTeach,
+    skillsToLearn: processedLearn,
   });
 
   const token = generateToken(user._id);

@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
         setUser(userData);
         localStorage.setItem('token', jwtToken);
         localStorage.setItem('user', JSON.stringify(userData));
-        toast.success('Registration successful! Welcome to SkillSwap.');
+        toast.success('Registration successful! Welcome to Knowvia.');
         return true;
       }
     } catch (err) {

@@ -7,11 +7,7 @@ import {
   Clock,
   Video,
   CheckCircle2,
-  XCircle,
   Star,
-  FileText,
-  User,
-  Sparkles,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
@@ -57,33 +53,33 @@ const SessionsPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 bg-[#FFF8F3]">
       {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#F2E5DC] pb-6">
         <div>
-          <div className="flex items-center space-x-2 text-emerald-400 font-semibold text-xs uppercase tracking-wider mb-1">
-            <Calendar className="w-4 h-4" />
+          <div className="flex items-center space-x-2 text-emerald-700 font-extrabold text-xs uppercase tracking-wider mb-1">
+            <Calendar className="w-4 h-4 text-emerald-600" />
             <span>Learning Schedule</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#29201D] font-['Outfit']">
             Peer Learning <span className="text-gradient">Sessions</span>
           </h1>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-[#665550] mt-1 font-medium">
             Join video meetings, track upcoming study slots, and rate your exchange partners.
           </p>
         </div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex space-x-3 bg-gray-900/60 p-1.5 rounded-2xl border border-gray-800 w-fit">
+      <div className="flex space-x-3 bg-white p-1.5 rounded-2xl border border-[#F2E5DC] w-fit shadow-xs">
         {['Scheduled', 'Completed', 'Cancelled'].map((st) => (
           <button
             key={st}
             onClick={() => setStatusFilter(st)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
               statusFilter === st
-                ? 'bg-gradient-primary text-white shadow-md'
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-[#5B2333] text-white shadow-md'
+                : 'text-[#665550] hover:text-[#5B2333]'
             }`}
           >
             {st} Sessions
@@ -93,11 +89,11 @@ const SessionsPage = () => {
 
       {/* Sessions Grid */}
       {loading ? (
-        <div className="p-12 text-center text-sm text-gray-400 glass-card rounded-2xl">
+        <div className="p-12 text-center text-sm text-[#665550] knowvia-card rounded-2xl">
           Loading learning sessions...
         </div>
       ) : sessions.length === 0 ? (
-        <div className="p-12 text-center glass-card rounded-2xl border border-gray-800 text-gray-400 text-xs">
+        <div className="p-12 text-center knowvia-card rounded-2xl border border-[#E8D8CC] text-[#665550] text-xs font-medium">
           No {statusFilter.toLowerCase()} sessions found.
         </div>
       ) : (
@@ -109,24 +105,24 @@ const SessionsPage = () => {
             return (
               <div
                 key={session._id}
-                className="glass-card p-6 rounded-2xl border border-gray-800 space-y-4 hover:border-indigo-500/30 transition-all"
+                className="knowvia-card-3d p-6 border border-[#E8D8CC] space-y-4 hover:border-[#C86B7B]/40 transition-all"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="font-bold text-white text-base">{session.title}</h3>
-                    <p className="text-xs text-gray-400 flex items-center space-x-1.5 mt-1">
-                      <Clock className="w-3.5 h-3.5 text-indigo-400" />
+                    <h3 className="font-extrabold text-[#29201D] text-base font-['Outfit']">{session.title}</h3>
+                    <p className="text-xs text-[#665550] flex items-center space-x-1.5 mt-1 font-medium">
+                      <Clock className="w-3.5 h-3.5 text-[#C86B7B]" />
                       <span>{session.scheduledAt ? format(new Date(session.scheduledAt), 'PPP p') : ''}</span>
                       <span>({session.durationMinutes} mins)</span>
                     </p>
                   </div>
                   <span
-                    className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-black border ${
                       session.status === 'Scheduled'
-                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                         : session.status === 'Completed'
-                        ? 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30'
-                        : 'bg-red-500/10 text-red-400 border-red-500/30'
+                        ? 'bg-[#5B2333]/10 text-[#5B2333] border-[#5B2333]/30'
+                        : 'bg-rose-50 text-rose-800 border-rose-200'
                     }`}
                   >
                     {session.status}
@@ -134,42 +130,42 @@ const SessionsPage = () => {
                 </div>
 
                 {/* Partner Info */}
-                <div className="p-3 rounded-xl bg-gray-900/60 border border-gray-800 flex items-center space-x-3">
+                <div className="p-3 rounded-xl bg-[#FFF8F3] border border-[#F2E0D5] flex items-center space-x-3">
                   {partner?.avatar ? (
                     <img
                       src={partner.avatar}
                       alt={partner.name}
-                      className="w-10 h-10 rounded-xl object-cover"
+                      className="w-10 h-10 rounded-xl object-cover border border-[#F4B6A6]/40"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white text-sm">
+                    <div className="w-10 h-10 rounded-xl bg-[#5B2333] flex items-center justify-center font-black text-white text-sm">
                       {partner?.name?.charAt(0) || 'U'}
                     </div>
                   )}
                   <div>
-                    <p className="text-xs font-bold text-white">Partner: {partner?.name || 'Peer'}</p>
-                    <p className="text-[11px] text-gray-400">{partner?.major || partner?.department || 'Student'}</p>
+                    <p className="text-xs font-bold text-[#29201D]">Partner: {partner?.name || 'Peer'}</p>
+                    <p className="text-[11px] text-[#665550]">{partner?.major || partner?.department || 'Student'}</p>
                   </div>
                 </div>
 
                 {/* Description */}
                 {session.description && (
-                  <p className="text-xs text-gray-300 bg-gray-950/40 p-3 rounded-xl border border-gray-800/80">
-                    <span className="font-semibold text-gray-400 block mb-0.5">Agenda:</span>
+                  <p className="text-xs text-[#29201D] bg-[#FFF8F3] p-3 rounded-xl border border-[#F2E5DC] font-medium">
+                    <span className="font-extrabold text-[#5B2333] block mb-0.5">Agenda:</span>
                     {session.description}
                   </p>
                 )}
 
                 {/* Actions Bar */}
-                <div className="pt-2 border-t border-gray-800/80 flex flex-wrap items-center justify-between gap-2">
+                <div className="pt-2 border-t border-[#F2E5DC] flex flex-wrap items-center justify-between gap-2">
                   {session.meetingLink && session.status === 'Scheduled' && (
                     <a
                       href={session.meetingLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md flex items-center space-x-1.5 transition-all"
+                      className="px-4 py-2 rounded-xl bg-[#5B2333] hover:bg-[#4A1C29] text-white text-xs font-extrabold shadow-md flex items-center space-x-1.5 transition-all cursor-pointer"
                     >
-                      <Video className="w-4 h-4" />
+                      <Video className="w-4 h-4 text-[#F4B6A6]" />
                       <span>Join Meeting Link</span>
                     </a>
                   )}
@@ -178,13 +174,13 @@ const SessionsPage = () => {
                     <div className="flex items-center space-x-2 ml-auto">
                       <button
                         onClick={() => handleUpdateStatus(session._id, 'Cancelled')}
-                        className="px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-400 hover:text-red-400 hover:bg-red-500/10"
+                        className="px-3 py-1.5 rounded-xl text-xs font-bold text-[#665550] hover:text-rose-600 hover:bg-rose-50 cursor-pointer"
                       >
                         Cancel
                       </button>
                       <button
                         onClick={() => handleUpdateStatus(session._id, 'Completed')}
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 flex items-center space-x-1"
+                        className="px-3.5 py-1.5 rounded-xl text-xs font-extrabold text-white bg-emerald-600 hover:bg-emerald-700 flex items-center space-x-1 cursor-pointer shadow-xs"
                       >
                         <CheckCircle2 className="w-4 h-4" />
                         <span>Complete</span>
@@ -198,9 +194,9 @@ const SessionsPage = () => {
                         setSelectedSessionForReview({ ...session, currentUserId });
                         setReviewModalOpen(true);
                       }}
-                      className="px-4 py-2 rounded-xl text-xs font-bold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 ml-auto flex items-center space-x-1.5 transition-colors"
+                      className="px-4 py-2 rounded-xl text-xs font-bold text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 ml-auto flex items-center space-x-1.5 transition-colors cursor-pointer"
                     >
-                      <Star className="w-4 h-4 fill-amber-300" />
+                      <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
                       <span>Rate & Review Partner</span>
                     </button>
                   )}

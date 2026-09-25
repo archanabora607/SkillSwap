@@ -24,15 +24,15 @@ const RatingStars = ({ rating = 0, count, onRate, size = 'md', interactive = fal
             <Star
               className={`${sizeClasses[size]} ${
                 isFilled
-                  ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]'
-                  : 'text-gray-600'
+                  ? 'text-amber-500 fill-amber-500 drop-shadow-[0_2px_4px_rgba(245,158,11,0.4)]'
+                  : 'text-[#E0CFCE] fill-[#FFF8F3]'
               }`}
             />
           </button>
         );
       })}
       {count !== undefined && (
-        <span className="text-xs text-gray-400 ml-1 font-medium">({count})</span>
+        <span className="text-xs text-[#665550] ml-1 font-semibold">({count})</span>
       )}
     </div>
   );

@@ -21,8 +21,8 @@ const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0b0f17] flex items-center justify-center text-sm text-gray-400">
-        Loading SkillSwap...
+      <div className="min-h-screen bg-[#FFF8F3] flex items-center justify-center text-sm text-[#5B2333] font-semibold">
+        Loading Knowvia...
       </div>
     );
   }
@@ -37,7 +37,7 @@ const PublicRoute = ({ children }) => {
 
 function AppContent() {
   return (
-    <div className="min-h-screen bg-[#0b0f17] text-gray-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#FFF8F3] text-[#29201D] flex flex-col font-sans selection:bg-[#F4B6A6]/40 selection:text-[#5B2333]">
       <Navbar />
       <main className="flex-1">
         <Routes>
@@ -132,11 +132,12 @@ function AppContent() {
         position="bottom-right"
         toastOptions={{
           style: {
-            background: '#1e293b',
-            color: '#f8fafc',
-            border: '1px solid rgba(255,255,255,0.1)',
-            borderRadius: '12px',
-            fontSize: '12px',
+            background: '#5B2333',
+            color: '#FFF8F3',
+            border: '1px solid #F4B6A6',
+            borderRadius: '14px',
+            fontSize: '13px',
+            boxShadow: '0 10px 25px rgba(91, 35, 51, 0.25)',
           },
         }}
       />

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import API from '../services/api';
 import SkillBadge from '../components/SkillBadge';
 import RatingStars from '../components/RatingStars';
-import { ArrowRightLeft, Star, User, BookOpen, GraduationCap, ArrowLeft, MessageSquare } from 'lucide-react';
+import { ArrowRightLeft, Star, BookOpen, GraduationCap, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const UserProfilePage = () => {
@@ -35,55 +35,55 @@ const UserProfilePage = () => {
   }, [userId]);
 
   if (loading) {
-    return <div className="p-16 text-center text-sm text-gray-400">Loading student profile...</div>;
+    return <div className="p-16 text-center text-sm text-[#665550] bg-[#FFF8F3]">Loading student profile...</div>;
   }
 
   if (!student) {
-    return <div className="p-16 text-center text-sm text-red-400">Student not found.</div>;
+    return <div className="p-16 text-center text-sm text-rose-600 bg-[#FFF8F3]">Student not found.</div>;
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 bg-[#FFF8F3]">
       <button
         onClick={() => navigate(-1)}
-        className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-400 hover:text-white transition-colors"
+        className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#5B2333] hover:text-[#C86B7B] transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Explore</span>
       </button>
 
       {/* Profile Header */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="knowvia-card-3d p-6 sm:p-8 border border-[#E8D8CC] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center space-x-4">
           {student.avatar ? (
             <img
               src={student.avatar}
               alt={student.name}
-              className="w-20 h-20 rounded-2xl object-cover border-2 border-indigo-500/40"
+              className="w-20 h-20 rounded-2xl object-cover border-2 border-[#F4B6A6]/60 shadow-lg"
             />
           ) : (
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-extrabold text-3xl shadow-xl">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#5B2333] via-[#7A2E44] to-[#C86B7B] flex items-center justify-center text-[#FFF8F3] font-black text-3xl shadow-xl">
               {student.name?.charAt(0)}
             </div>
           )}
           <div>
-            <h1 className="text-2xl font-extrabold text-white">{student.name}</h1>
-            <p className="text-xs text-indigo-400 font-semibold mt-0.5">
+            <h1 className="text-2xl font-black text-[#29201D] font-['Outfit']">{student.name}</h1>
+            <p className="text-xs text-[#5B2333] font-bold mt-0.5">
               {student.major || 'Student'} {student.yearOfStudy ? `• Year ${student.yearOfStudy}` : ''}
             </p>
             <div className="flex items-center space-x-2 mt-2">
               <RatingStars rating={student.ratingAverage || 0} size="sm" />
-              <span className="text-xs font-bold text-white">
+              <span className="text-xs font-bold text-[#29201D]">
                 {student.ratingAverage?.toFixed(1) || '5.0'}
               </span>
-              <span className="text-xs text-gray-500">({student.ratingCount || 0} reviews)</span>
+              <span className="text-xs text-[#665550]">({student.ratingCount || 0} reviews)</span>
             </div>
           </div>
         </div>
 
         <button
           onClick={() => navigate('/explore')}
-          className="px-5 py-2.5 rounded-xl bg-gradient-primary hover:bg-gradient-hover text-white text-xs font-bold shadow-lg flex items-center space-x-2"
+          className="knowvia-btn-rose px-5 py-2.5 text-xs font-extrabold flex items-center space-x-2 cursor-pointer"
         >
           <ArrowRightLeft className="w-4 h-4" />
           <span>Propose Skill Exchange</span>
@@ -92,17 +92,17 @@ const UserProfilePage = () => {
 
       {/* Bio */}
       {student.bio && (
-        <div className="glass-panel p-6 rounded-3xl border border-gray-800">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">About Student</h3>
-          <p className="text-xs text-gray-300 italic">"{student.bio}"</p>
+        <div className="knowvia-card-3d p-6 border border-[#E8D8CC]">
+          <h3 className="text-xs font-black uppercase tracking-wider text-[#5B2333] mb-2 font-['Outfit']">About Student</h3>
+          <p className="text-xs text-[#665550] italic font-medium">"{student.bio}"</p>
         </div>
       )}
 
       {/* Skills Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="glass-panel p-6 rounded-3xl border border-gray-800 space-y-3">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-2">
-            <GraduationCap className="w-4 h-4" />
+        <div className="knowvia-card-3d p-6 border border-[#E8D8CC] space-y-3">
+          <h3 className="text-xs font-black uppercase tracking-wider text-[#5B2333] flex items-center space-x-2 font-['Outfit']">
+            <GraduationCap className="w-4 h-4 text-[#C86B7B]" />
             <span>Skills They Can Teach</span>
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -112,8 +112,8 @@ const UserProfilePage = () => {
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-3xl border border-gray-800 space-y-3">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center space-x-2">
+        <div className="knowvia-card-3d p-6 border border-[#E8D8CC] space-y-3">
+          <h3 className="text-xs font-black uppercase tracking-wider text-[#C86B7B] flex items-center space-x-2 font-['Outfit']">
             <BookOpen className="w-4 h-4" />
             <span>Skills They Want to Learn</span>
           </h3>
@@ -126,23 +126,23 @@ const UserProfilePage = () => {
       </div>
 
       {/* Reviews List */}
-      <div className="glass-panel p-6 rounded-3xl border border-gray-800 space-y-4">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center space-x-2">
-          <Star className="w-4 h-4 fill-amber-400" />
+      <div className="knowvia-card-3d p-6 border border-[#E8D8CC] space-y-4">
+        <h3 className="text-xs font-black uppercase tracking-wider text-amber-800 flex items-center space-x-2 font-['Outfit']">
+          <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
           <span>Peer Feedback ({reviews.length})</span>
         </h3>
 
         {reviews.length === 0 ? (
-          <p className="text-xs text-gray-500 py-4 text-center">No reviews yet for this student.</p>
+          <p className="text-xs text-[#8C7770] py-4 text-center font-medium">No reviews yet for this student.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {reviews.map((rev) => (
-              <div key={rev._id} className="p-4 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-2">
+              <div key={rev._id} className="p-4 rounded-2xl bg-[#FFF8F3] border border-[#F2E0D5] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">{rev.reviewer?.name}</span>
+                  <span className="text-xs font-extrabold text-[#29201D]">{rev.reviewer?.name}</span>
                   <RatingStars rating={rev.rating} size="sm" />
                 </div>
-                <p className="text-xs text-gray-300 italic">"{rev.comment}"</p>
+                <p className="text-xs text-[#665550] italic">"{rev.comment}"</p>
               </div>
             ))}
           </div>
